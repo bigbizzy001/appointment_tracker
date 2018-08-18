@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Appointment Detail
+{% endblock %}
+
+{% block content %}
+    <h3>Appointment Details</h3>
+    <br>
+    <table class=" table table-striped">
+        <tbody>
+            <tr>
+                <td><strong>Title</strong></td>
+                <td>{{ detail.title }}</td>
+            </tr>
+            <tr>
+                <td><strong>Description</strong></td>
+                <td>{{ detail.description }}</td>
+            </tr>
+            <tr>
+                <td><strong>Time</strong></td>
+                <td>{{ detail.start_time }} - {{ detail.end_time }}</td>
+            </tr>
+            <tr>
+                <td><strong>Date</strong></td>
+                <td>{{ detail.appointment_date }}</td>
+            </tr>
+            <tr class="success">
+                <td><strong>Attending</strong></td>
+                <td class="success">{% if detail.attending %}Yes.{% else %}No.{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <p><a href="{% url 'home' %}" class="btn btn-outline-secondary"><em>Back</em></a></p>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h4>Your profile below...</h4>
+        {% if profile.photo %}
+            <img src="media/office/images/{{ profile.photo.url }}" align="center" width="300" height="300">
+        {% else %}
+            <img src="{% static 'image/no_image.png' %}" align="center" width="300" height="300">
+        {% endif %}
+
+        <br>
+        <br>
+        <table class=" table table-striped">
+            <tbody>
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>{{ profile.designation }} {{ profile.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <td>{{ profile.email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Responsibility</strong></td>
+                    <td>{{ profile.responsibility }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Office Duration</strong></td>
+                    <td>{{ profile.start_time }} - {{ profile.end_time }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>You are not logged in</p>
+    {% endif %}
+{% endblock %}

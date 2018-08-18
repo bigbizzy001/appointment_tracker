@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Term of office{% endblock %}
+
+{% block content %}
+  <div class="row">
+    {% if request.user.is_authenticated %}
+        <div class="col-md-8 blog-main">
+
+            <h3 class="pb-3 mb-4 font-italic border-bottom">
+               {% if request.user.username == 'admin' %}
+                    Welcome Admin
+               {% else %}
+                    {{ request.user.appointee.name}}
+                {% endif %}
+            </h3>
+
+            <div class="blog-post">
+            <h2 class="blog-post-title">All Appointments</h2>
+            <ol>
+                {% for post in posts %}
+                    <li><p><a href="{% url 'details' pk=post.pk %}">{{ post.title }}</a> by {{ post.start_time }} - {{ post.end_time }}</p></li>
+                {% endfor %}
+            </ol>
+
+          </div><!-- /.blog-post -->
+
+
+
+          {% include 'office/pagination.html' with page=posts %}
+
+        </div><!-- /.blog-main -->
+
+        <aside class="col-md-4 blog-sidebar">
+          <div class="p-3">
+            <h4 class="font-italic">Attending Appointments</h4>
+            <ul class="list-styled">
+                {% for appoint in posts %}
+                    {% if appoint.attending %}
+                        <li><p><a href="{% url 'details' pk=appoint.pk %}">{{ appoint.title }}</a> by {{ appoint.start_time }}</p></li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+          </div>
+
+          <div class="p-3">
+            <h4 class="font-italic">Rejected Appointments</h4>
+            <ul class="list-styled mb-0">
+               {% for appoint in posts %}
+                    {% if not appoint.attending %}
+                        <li><p><a href="{% url 'details' pk=appoint.pk %}">{{ appoint.title }}</a> by {{ appoint.start_time }}</p></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+          </div>
+
+
+        </aside><!-- /.blog-sidebar -->
+    {% else %}
+        <p>Please <em><a href="{% url 'login' %}">login</a></em> to view appointments.</p>
+    {% endif %}
+  </div><!-- /.row -->
+
+{% endblock %}
